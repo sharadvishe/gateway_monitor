@@ -51,7 +51,7 @@ class Tracker:
 
         """
         try:
-            res = requests.get(''.join([self.url,"/api/token"]), auth=('sharadvishe', 'password'))
+            res = requests.get(''.join([self.url,"/api/token"]), auth=('username', 'password'))
         except:
             return None
         return res.json()['token']
@@ -197,7 +197,7 @@ class Tracker:
                 from_timestamp = datetime.utcnow()
             else:
                 flag += 1                
-            tm.sleep(5)
+            tm.sleep(10)
 
 if __name__ == "__main__":
     tr = Tracker()
