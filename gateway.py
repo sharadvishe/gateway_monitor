@@ -91,7 +91,7 @@ class Tracker:
         else:
             return 0
 
-    def loadData(self):
+    def load_data(self):
         flag = 0
         device_id = self.get_device_id()
 
@@ -172,4 +172,4 @@ class Tracker:
 
 if __name__ == "__main__":
     tr = Tracker()
-    tr.loadData()
+    tr.load_data()
