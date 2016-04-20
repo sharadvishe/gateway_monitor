@@ -108,66 +108,66 @@ class Tracker:
 
             print "Monitoring app usage:"+json.dumps(app_usage)
 
-            # if self.internet_on():
+            if self.internet_on():
 
-            #     if self.token is None:
-            #         self.token = self.get_api_token()
-            #     if flag >= 1:
-            #         flag = 0
-            #         to_timestamp = datetime.utcnow()
+                if self.token is None:
+                    self.token = self.get_api_token()
+                if flag >= 1:
+                    flag = 0
+                    to_timestamp = datetime.utcnow()
 
-            #         log = {
-            #             "device_id":device_id,
-            #             "from_timestamp":from_timestamp.strftime("%Y-%m-%d %I:%M:%S %p"),
-            #             "to_timestamp":to_timestamp.strftime("%Y-%m-%d %I:%M:%S %p"),
-            #             "status" : "Connection Lost",
-            #         }
-            #         log =  json.dumps(log,indent=4)
-            #         # print log
+                    log = {
+                        "device_id":device_id,
+                        "from_timestamp":from_timestamp.strftime("%Y-%m-%d %I:%M:%S %p"),
+                        "to_timestamp":to_timestamp.strftime("%Y-%m-%d %I:%M:%S %p"),
+                        "status" : "Connection Lost",
+                    }
+                    log =  json.dumps(log,indent=4)
+                    # print log
 
-            #         try:
-            #             requests.post(''.join([self.url,"/lrs/api/v1.0/gateway/internet/log"]),data=log,headers={'Content-Type':'application/json'}, auth=(self.token,''),verify=False,timeout=10) 
-            #         except:
-            #             pass
+                    try:
+                        requests.post(''.join([self.url,"/lrs/api/v1.0/gateway/internet/log"]),data=log,headers={'Content-Type':'application/json'}, auth=(self.token,''),verify=False,timeout=10) 
+                    except:
+                        pass
 
-            #     cpu_utilization = psutil.cpu_percent()
-            #     boot_time = datetime.utcfromtimestamp(psutil.get_boot_time())      
-            #     uptime = datetime.now() - boot_time
-            #     uptime = int(uptime.total_seconds())
-            #     memstats = psutil.virtual_memory()
-            #     mem_utilization = ((memstats.total-memstats.free)/memstats.total)*100               
-            #     temperature = self.get_cpu_temperature()                
-            #     firmware_status = self.firmware_status()        
+                cpu_utilization = psutil.cpu_percent()
+                boot_time = datetime.utcfromtimestamp(psutil.get_boot_time())      
+                uptime = datetime.now() - boot_time
+                uptime = int(uptime.total_seconds())
+                memstats = psutil.virtual_memory()
+                mem_utilization = ((memstats.total-memstats.free)/memstats.total)*100               
+                temperature = self.get_cpu_temperature()                
+                firmware_status = self.firmware_status()        
 
-            #     status = {
-            #         "timestamp":datetime.utcnow().strftime("%Y-%m-%d %I:%M:%S %p"),
-            #         "cpu_utilization":cpu_utilization,
-            #         "boot_time":boot_time.strftime("%Y-%m-%d %I:%M:%S %p"),
-            #         "uptime":uptime,
-            #         "mem_utilization":round(mem_utilization,2),
-            #         "temperature":temperature,
-            #         "device_id" : device_id,
-            #         "firmware_status":firmware_status
-            #     }
+                status = {
+                    "timestamp":datetime.utcnow().strftime("%Y-%m-%d %I:%M:%S %p"),
+                    "cpu_utilization":cpu_utilization,
+                    "boot_time":boot_time.strftime("%Y-%m-%d %I:%M:%S %p"),
+                    "uptime":uptime,
+                    "mem_utilization":round(mem_utilization,2),
+                    "temperature":temperature,
+                    "device_id" : device_id,
+                    "firmware_status":firmware_status
+                }
 
-            #     data =  json.dumps(status,indent=4)
-            #     # print data
+                data =  json.dumps(status,indent=4)
+                # print data
 
-            #     try:
-            #         resp = requests.post(''.join([self.url,"/lrs/api/v1.0/statastic"]),data=data,headers={'Content-Type':'application/json'}, auth=(self.token,''),verify=False,timeout=10) 
-            #     except requests.exceptions.Timeout:        
-            #         pass
-            #     except requests.exceptions.TooManyRedirects:
-            #         sys.exit(1)
-            #     except requests.exceptions.RequestException as e:
-            #         print e
-            #         sys.exit(1)
+                try:
+                    resp = requests.post(''.join([self.url,"/lrs/api/v1.0/statastic"]),data=data,headers={'Content-Type':'application/json'}, auth=(self.token,''),verify=False,timeout=10) 
+                except requests.exceptions.Timeout:        
+                    pass
+                except requests.exceptions.TooManyRedirects:
+                    sys.exit(1)
+                except requests.exceptions.RequestException as e:
+                    print e
+                    sys.exit(1)
 
-            # elif flag == 0:
-            #     flag = 1
-            #     from_timestamp = datetime.utcnow()
-            # else:
-            #     flag += 1                
+            elif flag == 0:
+                flag = 1
+                from_timestamp = datetime.utcnow()
+            else:
+                flag += 1                
             tm.sleep(5)
 
 if __name__ == "__main__":
