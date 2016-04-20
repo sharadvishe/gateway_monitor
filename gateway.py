@@ -20,6 +20,9 @@ class Tracker:
         self.token = None
 
     def get_utilization(self,name=None):
+        """
+        This method returns CPU and Memory utilization of running process.
+        """
         pid = subprocess.Popen("ps aux|grep "+name+"|awk '{print $2;exit}'", shell=True, stdout=subprocess.PIPE).stdout.read().strip()
         cpu = subprocess.Popen("ps aux|grep "+name+"|awk '{print $3;exit}'", shell=True, stdout=subprocess.PIPE).stdout.read().strip()
         memory = subprocess.Popen("ps aux|grep "+name+"|awk '{print $4;exit}'", shell=True, stdout=subprocess.PIPE).stdout.read().strip()
@@ -43,6 +46,10 @@ class Tracker:
         return {"pid":pid,"cpu":cpu,"memory":memory}  
 
     def get_api_token(self):
+        """
+        Generate API token which is used to consume Heroku web application API endpoint.
+
+        """
         try:
             res = requests.get(''.join([self.url,"/api/token"]), auth=('sharadvishe', 'password'))
         except:
@@ -51,6 +58,11 @@ class Tracker:
         
 
     def get_device_id(self):
+        """
+        This method read system metadata files and find out device MAC address.
+        MAC address is same as device serial number.
+
+        """
         import commands
         import os
         if os.path.exists("/sys/class/net/eth0/address"):
@@ -65,6 +77,9 @@ class Tracker:
         return hwaddr.strip()        
 
     def firmware_status(self):
+        """
+        Check firmaware status weather it is running or stopped.        
+        """
         import socket;
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         result = sock.connect_ex(('127.0.0.1',port))
@@ -74,6 +89,10 @@ class Tracker:
            return "Stopped"
 
     def internet_on(self):
+        """
+            Check internet connectivity status
+
+        """
         try:
             response=urllib2.urlopen('http://www.google.com',timeout=20)
             return True
@@ -81,6 +100,11 @@ class Tracker:
         return False
 
     def get_cpu_temperature(self):
+
+        """
+        Get CPU temerature by reading system metadata files.
+
+        """
         import commands
         import os
         if os.path.exists("/sys/class/thermal/thermal_zone0/temp"):
@@ -92,6 +116,11 @@ class Tracker:
             return 0
 
     def load_data(self):
+
+        """
+        Check System health status along with internet connectivity status and POST health check data after every seconds.
+        
+        """
         flag = 0
         device_id = self.get_device_id()
 
