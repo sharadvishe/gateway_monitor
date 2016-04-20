@@ -4,7 +4,7 @@ internet connectivity history and POST this data to heroku web application every
 
 ### Deployment instructions
 
-Change username and password in 
+
 ```bash
 $ git clone https://github.com/sharadvishe/gateway_monitor.git
 $ cd gateway_monitor
